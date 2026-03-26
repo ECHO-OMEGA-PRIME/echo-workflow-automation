@@ -1,0 +1,23 @@
+name = "echo-workflow-automation"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+[triggers]
+crons = ["*/15 * * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "echo-workflow-automation"
+database_id = "2bd4bced-9d7f-46cc-b086-0574b7057690"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "0e251035d89d4e1983c271a83cc9cc29"
+
+[[services]]
+binding = "ENGINE_RUNTIME"
+service = "echo-engine-runtime"
+
+[[services]]
+binding = "SHARED_BRAIN"
+service = "echo-shared-brain"
