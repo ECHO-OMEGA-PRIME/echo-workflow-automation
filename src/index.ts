@@ -81,7 +81,7 @@ app.use('*', async (c, next) => {
 });
 
 // ── Health ──
-app.get('/', (c) => c.redirect('/health'));
+app.get('/', (c) => c.json({ service: 'echo-workflow-automation', version: '1.0.0', status: 'operational' }));
 app.get('/health', (c) => c.json({ ok: true, service: 'echo-workflow-automation', version: '1.0.0', timestamp: new Date().toISOString() }));
 app.get('/status', async (c) => {
   const stats = await c.env.DB.prepare('SELECT COUNT(*) as total, SUM(CASE WHEN status=\'active\' THEN 1 ELSE 0 END) as active FROM workflows').first<{total:number;active:number}>();
