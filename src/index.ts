@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 
 type Env = {
   DB: D1Database;
@@ -36,6 +37,9 @@ async function rateLimit(kv: KVNamespace, key: string, limit: number, windowSec 
   await kv.put(`rl:${key}`, JSON.stringify({ c: newCount, t: now }), { expirationTtl: windowSec * 2 });
   return true;
 }
+
+// CORS
+app.use('*', cors());
 
 // --- Auth middleware ---
 app.use('*', async (c, next) => {
