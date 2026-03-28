@@ -33,6 +33,12 @@ function sanitizeBody(obj: Record<string, unknown>): Record<string, unknown> {
   return out;
 }
 
+function slog(level: 'info' | 'warn' | 'error', msg: string, data?: Record<string, unknown>) {
+  const entry = { ts: new Date().toISOString(), level, worker: 'echo-workflow-automation', version: '1.0.0', msg, ...data };
+  if (level === 'error') console.error(JSON.stringify(entry));
+  else console.log(JSON.stringify(entry));
+}
+
 interface RLState { c: number; t: number; }
 async function rateLimit(kv: KVNamespace, key: string, limit: number, windowSec = 60): Promise<boolean> {
   const now = Date.now();
