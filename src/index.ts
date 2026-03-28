@@ -545,6 +545,18 @@ app.post('/ai/optimize', async (c) => {
   return c.json(data);
 });
 
+app.onError((err, c) => {
+  if (err.message?.includes('JSON')) {
+    return c.json({ error: 'Invalid JSON body' }, 400);
+  }
+  console.error(`[echo-workflow-automation] ${err.message}`);
+  return c.json({ error: 'Internal server error' }, 500);
+});
+
+app.notFound((c) => {
+  return c.json({ error: 'Not found' }, 404);
+});
+
 // ── Scheduled handler ──
 export default {
   fetch: app.fetch,
